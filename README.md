@@ -4,6 +4,14 @@
 ![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)
 
+## 🤔 What is this?
+
 Some neat little utilities relied upon by Regreso clients. Right now, these can be used to:
 
-- Get metadata info about websites (e.g. prefilling destination details automatically)
+- Get metadata info about websites (for prefilling destination details automatically)
+- AI-generate a list of practically-usable, relevant tags to describe a location based on metadata.
+
+## ☑️ TODOs
+
+- [ ] Document package
+- [ ] Support scraping image metadata
