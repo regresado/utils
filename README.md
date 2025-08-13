@@ -13,5 +13,7 @@ Some neat little utilities relied upon by Regreso clients. Right now, these can 
 
 ## ☑️ TODOs
 
+- [x] Add AI-tagging
 - [ ] Document package
 - [ ] Support scraping image metadata
+
