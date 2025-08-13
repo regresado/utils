@@ -9,7 +9,7 @@
 Some neat little utilities relied upon by Regreso clients. Right now, these can be used to:
 
 - Get metadata info about websites (for prefilling destination details automatically)
-- AI-generate a list of practically-usable, relevant tags to describe a location based on metadata.
+- AI-generate a list of practically-usable, relevant tags to describe a location based on metadata (supports provided, self-hostable AI instance URL)
 
 ## ☑️ TODOs
 
