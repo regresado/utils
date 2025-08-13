@@ -8,6 +8,7 @@ export interface TaggerConfig {
   maxTags?: number;
   maxRetries?: number;
   requestDelay?: number;
+  aiInstance?: string | null;
 }
 
 export interface TagResult {
@@ -73,12 +74,12 @@ class PromptBuilder {
 
 export class SiteTagger {
   private readonly config: Required<TaggerConfig>;
-  private readonly apiUrl = "https://ai.hackclub.com/chat/completions";
   private readonly model = "qwen/qwen3-32b";
   private readonly temperature = 0.3;
 
   constructor(config: TaggerConfig = {}) {
     this.config = {
+      aiInstance: config.aiInstance || null,
       maxTags: config.maxTags || 4,
       maxRetries: config.maxRetries || 2,
       requestDelay: config.requestDelay || 1000,
@@ -88,6 +89,17 @@ export class SiteTagger {
   async generateTags(site: SiteInput): Promise<TagResult> {
     const startTime = Date.now();
     let retryCount = 0;
+    if (!this.config.aiInstance) {
+      return {
+        tags: [],
+        success: false,
+        error: "AI instance URL is not configured",
+        metadata: {
+          processingTime: Date.now() - startTime,
+          retryCount,
+        },
+      };
+    }
 
     try {
       if (!site.url && !site.headline && !site.description) {
@@ -127,9 +139,10 @@ export class SiteTagger {
     prompt: string,
     retryCount: number,
   ): Promise<string[]> {
+    const apiUrl = `${this.config.aiInstance}/chat/completions`;
     for (let attempt = 0; attempt <= this.config.maxRetries; attempt++) {
       try {
-        const response = await fetch(this.apiUrl, {
+        const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
