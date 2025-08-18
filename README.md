@@ -15,70 +15,77 @@ Some neat little utilities relied upon by Regreso clients. Right now, these can 
 
 Let's say you wanted to use this module in your own regreso client (or something entirely different), here's how:
 
-- **SiteTagger** - A class used to control AI-based website tagging behaviors.
+- **SiteTagger(config)** - A class used to control AI-based website tagging behaviors.
 
-  ```
-  import { SiteTagger } from '@regreso/utils'
+  ```javascript
+  import { SiteTagger } from "@regreso/utils";
 
   async function demo() {
     const tagger = new SiteTagger({
       maxTags: 3,
-      aiInstance: 'https://ai.hackclub.com',
+      aiInstance: "https://ai.hackclub.com",
       maxRetries: 2,
-      requestDelay: 1000
-    })
+      requestDelay: 1000,
+    });
 
     const demoSites = [
       {
-        url: 'https://github.com/microsoft/vscode',
-        headline: 'Visual Studio Code',
-        description: 'A lightweight but powerful source code editor'
+        url: "https://github.com/microsoft/vscode",
+        headline: "Visual Studio Code",
+        description: "A lightweight but powerful source code editor",
       },
       {
-        url: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/',
-        headline: 'A Complete Guide to Flexbox',
-        description: 'CSS Flexbox layout guide with examples'
-      }
-    ]
+        url: "https://css-tricks.com/snippets/css/a-guide-to-flexbox/",
+        headline: "A Complete Guide to Flexbox",
+        description: "CSS Flexbox layout guide with examples",
+      },
+    ];
 
-    // Generates a specified number of tags
-
-    const result = await tagger.generateTags(demoSites[0])
+    const result = await tagger.generateTags(demoSites[0]);
 
     if (result.success) {
-      console.log(`tags: ${result.tags.join(', ')} in ${result.metadata?.processingTime} ms.`)
+      console.log(
+        `tags: ${result.tags.join(", ")} in ${result.metadata?.processingTime} ms.`,
+      );
     } else {
-      console.log(`error: ${result.error}`)
+      console.log(`error: ${result.error}`);
     }
 
-    const batchResults = await tagger.generateTagsBatch(demoSites)
+    const batchResults = await tagger.generateTagsBatch(demoSites);
 
     console.log(
       batchResults
-        .filter(r => r.result.success)
-        .map(r => `${r.headline}: [${r.result.tags.join(', ')}]`)
-        .join('\n')
-    )
+        .filter((r) => r.result.success)
+        .map((r) => `${r.headline}: [${r.result.tags.join(", ")}]`)
+        .join("\n"),
+    );
   }
 
+  demo();
   ```
 
-- **getWebDetails** - Gets the web details scraped from meta tags of specified website's URL. Returns multiple versions if relevant (title, og:title, twitter:title to be specific)
+- **getWebDetails(url: String)** - Gets the web details scraped from meta tags of specified website's URL. Returns multiple versions if relevant (title, og:title, twitter:title to be specific)
 
-  ```
-  import { getWebDetails } from '@regreso/utils'
+  ```javascript
+  import { getWebDetails } from "@regreso/utils";
 
-  const webDetailsResult = getWebDetails('fbi.gov')
+  async function demo() {
+    const webDetailsResult = await getWebDetails("fbi.gov");
 
-  console.log({
-    url: webDetailsResult.url, // appends protocol if missing
-    title: webDetailsResult.title[0]
-      ?? webDetailsResult.title[1]
-      ?? webDetailsResult.title[2],
-    description: webDetailsResult.description[0]
-      ?? webDetailsResult.description[1]
-      ?? webDetailsResult.description[2]
-  })
+    console.log({
+      url: webDetailsResult.url, // with protocol appended if missing
+      title:
+        webDetailsResult.title[0] ??
+        webDetailsResult.title[1] ??
+        webDetailsResult.title[2],
+      description:
+        webDetailsResult.description[0] ??
+        webDetailsResult.description[1] ??
+        webDetailsResult.description[2],
+    });
+  }
+
+  demo();
   ```
 
 ## ☑️ TODOs
