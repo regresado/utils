@@ -233,15 +233,6 @@ export class SiteTagger {
   private sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
-
-  async getTagSuggestions(
-    site: SiteInput,
-    count: number = 8,
-  ): Promise<string[]> {
-    const tempTagger = new SiteTagger({ ...this.config, maxTags: count });
-    const result = await tempTagger.generateTags(site);
-    return result.tags;
-  }
 }
 
 export default SiteTagger;
