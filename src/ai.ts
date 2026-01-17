@@ -141,7 +141,7 @@ export class SiteTagger {
     prompt: string,
     retryCount: number,
   ): Promise<string[]> {
-    const apiUrl = `${this.config.aiInstance}/chat/completions`;
+    const apiUrl = `${this.config.aiInstance}/proxy/v1/chat/completions`;
     for (let attempt = 0; attempt <= this.config.maxRetries; attempt++) {
       try {
         const response = await fetch(apiUrl, {
