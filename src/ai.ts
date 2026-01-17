@@ -9,6 +9,7 @@ export interface TaggerConfig {
   maxRetries?: number;
   requestDelay?: number;
   aiInstance?: string | null;
+  instanceAuthorization?: string | null;
 }
 
 export interface TagResult {
@@ -80,6 +81,7 @@ export class SiteTagger {
   constructor(config: TaggerConfig = {}) {
     this.config = {
       aiInstance: config.aiInstance || null,
+      instanceAuthorization: config.instanceAuthorization || null,
       maxTags: config.maxTags || 4,
       maxRetries: config.maxRetries || 2,
       requestDelay: config.requestDelay || 1000,
@@ -146,6 +148,7 @@ export class SiteTagger {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: this.config.instanceAuthorization ?? "",
           },
           body: JSON.stringify({
             model: this.model,
