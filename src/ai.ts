@@ -37,7 +37,7 @@ class PromptBuilder {
       "",
       "Focus on HIGH-LEVEL categories like:",
       "- Subject areas: javascript, python, politics, science, business, design",
-      "- Content types: tutorial, documentation, news, tool, reference",
+      "- Content types: tutorial, documentation, games, news, tool, reference",
       "- Industries: finance, healthcare, education, entertainment",
       "",
     ];
@@ -75,7 +75,7 @@ class PromptBuilder {
 
 export class SiteTagger {
   private readonly config: Required<TaggerConfig>;
-  private readonly model = "qwen/qwen3-32b";
+  private readonly model = "google/gemini-2.5-flash-lite-preview-09-2025";
   private readonly temperature = 0.3;
 
   constructor(config: TaggerConfig = {}) {
